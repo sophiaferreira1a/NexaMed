@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaMed - Histórico médico</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2>NexaMed</h2>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="pacientes.html">Pacientes</a>
+                <a href="profissionais.html">Profissionais</a>
+                <a href="quartos.html">Quartos</a>
+                <a href="consultas.html">Consultas</a>
+                <a href="internacoes.html">Internações</a>
+                <a href="historico.html" class="active">Histórico médico</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Histórico médico</h1>
+            <section class="card">
+                <form class="form">
+                    <label>Paciente<select><option>Maria Silva</option><option>João Souza</option><option>Ana Pereira</option></select></label>
+                    <div class="actions"><button type="submit">Consultar histórico</button></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Maria Silva</h2>
+                <p class="muted">CPF 123.456.789-00 · Nascimento 12/03/1985</p>
+                <h3>Informações relevantes</h3>
+                <p>Alergia a penicilina. Hipertensão controlada com medicação.</p>
+            </section>
+            <section class="card">
+                <h2>Consultas realizadas</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Data</th><th>Horário</th><th>Profissional</th><th>Motivo</th><th>Observações</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10/10/2026</td><td>09:00</td><td>Dr. Carlos Lima</td><td>Dor no peito</td><td>Solicitado eletrocardiograma</td>
+                            </tr>
+                            <tr>
+                                <td>15/06/2026</td><td>11:00</td><td>Dra. Paula Rocha</td><td>Check-up</td><td>Sem alterações</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="card">
+                <h2>Internações realizadas</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Entrada</th><th>Alta prevista</th><th>Alta efetiva</th><th>Quarto</th><th>Profissional</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>02/10/2026</td><td>09/10/2026</td><td>-</td><td>101</td><td>Dr. Carlos Lima</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

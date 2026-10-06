@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaMed - Profissionais de saúde</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+        <h2>NexaMed</h2>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="pacientes.html">Pacientes</a>
+                <a href="profissionais.html" class="active">Profissionais</a>
+                <a href="quartos.html">Quartos</a>
+                <a href="consultas.html">Consultas</a>
+                <a href="internacoes.html">Internações</a>
+                <a href="historico.html">Histórico médico</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Profissionais de saúde</h1>
+            <section class="card">
+                <h2>Novo profissional</h2>
+                <form class="form">
+                    <label>Nome<input type="text" placeholder="Nome completo"></label>
+                    <label>Registro profissional<input type="text" placeholder="CRM 00000"></label>
+                    <label>Especialidade<input type="text" placeholder="Ex.: Cardiologia"></label>
+                    <label>Telefone<input type="tel" placeholder="(31) 90000-0000"></label>
+                    <label>E-mail<input type="email" placeholder="nome@hospital.com"></label>
+                    <div class="actions"><button type="submit">Salvar profissional</button><button type="reset" class="secondary">Limpar</button></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Verificar disponibilidade</h2>
+                <form class="form">
+                    <label>Profissional<select><option value="">Selecione</option><option>Dr. Carlos Lima (Cardiologia)</option><option>Dra. Paula Rocha (Pediatria)</option></select></label>
+                    <label>Data<input type="date" placeholder=""></label>
+                    <label>Horário<input type="time" placeholder=""></label>
+                    <div class="actions"><button type="submit">Verificar</button><button type="reset" class="secondary">Limpar</button></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Profissionais cadastrados</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Nome</th><th>Registro</th><th>Especialidade</th><th>Telefone</th><th>E-mail</th><th>Ações</th></tr></thead>
+                        <tbody>
+                        <tr><td>Dr. Carlos Lima</td><td>CRM 12345</td><td>Cardiologia</td><td>(31) 3333-0001</td><td>carlos@hospital.com</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td></tr>
+                        <tr><td>Dra. Paula Rocha</td><td>CRM 67890</td><td>Pediatria</td><td>(31) 3333-0002</td><td>paula@hospital.com</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

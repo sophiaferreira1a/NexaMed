@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaMed - Pacientes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+            <aside class="sidebar">
+                <h2>NexaMed</h2>
+                <nav>
+                    <a href="index.html">Início</a>
+                    <a href="pacientes.html" class="active">Pacientes</a>
+                    <a href="profissionais.html">Profissionais</a>
+                    <a href="quartos.html">Quartos</a>
+                    <a href="consultas.html">Consultas</a>
+                    <a href="internacoes.html">Internações</a>
+                    <a href="historico.html">Histórico médico</a>
+                </nav>
+            </aside>
+        <main class="content">
+            <h1>Pacientes</h1>
+            <section class="card">
+                <h2>Novo paciente</h2>
+                <form class="form">
+                    <label>Nome<input type="text" placeholder="Nome completo"></label>
+                    <label>CPF<input type="text" placeholder="000.000.000-00"></label>
+                    <label>Data de nascimento<input type="date" placeholder=""></label>
+                    <label>Telefone<input type="tel" placeholder="(31) 90000-0000"></label>
+                    <label>Endereço<input type="text" placeholder="Rua, número, bairro"></label>
+                    <label>E-mail<input type="email" placeholder="nome@email.com"></label>
+                    <div class="actions">
+                        <button type="submit">Salvar paciente</button><button type="reset" class="secondary">Limpar</button>
+                    </div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Pacientes cadastrados</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Nome</th><th>CPF</th><th>Nascimento</th><th>Telefone</th><th>E-mail</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Maria Silva</td><td>123.456.789-00</td><td>12/03/1985</td><td>(31) 99999-0000</td><td>maria@email.com</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button> <a class="btn" href="historico.html">Histórico</a></td>
+                            </tr>
+                            <tr>
+                                <td>João Souza</td><td>987.654.321-00</td><td>30/07/1972</td><td>(31) 98888-1111</td><td>joao@email.com</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button> <a class="btn" href="historico.html">Histórico</a></td>
+                            </tr>
+                            <tr>
+                                <td>Ana Pereira</td><td>456.123.789-00</td><td>05/11/1999</td><td>(31) 97777-2222</td><td>ana@email.com</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button> <a class="btn" href="historico.html">Histórico</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaMed - Quartos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2>NexaMed</h2>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="pacientes.html">Pacientes</a>
+                <a href="profissionais.html">Profissionais</a>
+                <a href="quartos.html" class="active">Quartos</a>
+                <a href="consultas.html">Consultas</a>
+                <a href="internacoes.html">Internações</a>
+                <a href="historico.html">Histórico médico</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Quartos</h1>
+            <section class="card">
+                <h2>Novo quarto</h2>
+                <form class="form">
+                    <label>Número de identificação<input type="number" placeholder="101"></label>
+                    <label>Andar<input type="number" placeholder="1"></label>
+                    <label>Capacidade de pacientes<input type="number" placeholder="2"></label>
+                    <label>Situação atual<select><option value="">Selecione</option><option>Disponível</option><option>Ocupado</option></select></label>
+                    <div class="actions"><button type="submit">Salvar quarto</button><button type="reset" class="secondary">Limpar</button></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Quartos cadastrados</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Número</th><th>Andar</th><th>Capacidade</th><th>Ocupação</th><th>Situação</th><th>Ações</th></tr></thead>
+                        <tbody>
+                        <tr><td>101</td><td>1</td><td>2</td><td>1 de 2</td><td><span class="tag ok">Disponível</span></td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td></tr>
+                        <tr><td>102</td><td>1</td><td>1</td><td>1 de 1</td><td><span class="tag busy">Ocupado</span></td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td></tr>
+                        <tr><td>201</td><td>2</td><td>3</td><td>0 de 3</td><td><span class="tag ok">Disponível</span></td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

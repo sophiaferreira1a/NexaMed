@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaMed - Consultas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2>NexaMed</h2>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="pacientes.html">Pacientes</a>
+                <a href="profissionais.html">Profissionais</a>
+                <a href="quartos.html">Quartos</a>
+                <a href="consultas.html" class="active">Consultas</a>
+                <a href="internacoes.html">Internações</a>
+                <a href="historico.html">Histórico médico</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Consultas</h1>
+            <section class="card">
+                <h2>Agendar consulta</h2>
+                <form class="form">
+                    <label>Paciente<select><option value="">Selecione</option><option>Maria Silva</option><option>João Souza</option><option>Ana Pereira</option></select></label>
+                    <label>Profissional responsável<select><option value="">Selecione</option><option>Dr. Carlos Lima (Cardiologia)</option><option>Dra. Paula Rocha (Pediatria)</option></select></label>
+                    <label>Data<input type="date" placeholder=""></label>
+                    <label>Horário<input type="time" placeholder=""></label>
+                    <label>Motivo da consulta<input type="text" placeholder="Ex.: dor no peito"></label>
+                    <label>Observações médicas<textarea rows="3"></textarea></label>
+                    <div class="actions">
+                        <button type="submit">Agendar consulta</button><button type="reset" class="secondary">Limpar</button>
+                    </div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Consultas agendadas</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Paciente</th><th>Profissional</th><th>Data</th><th>Horário</th><th>Motivo</th><th>Ações</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Maria Silva</td><td>Dr. Carlos Lima</td><td>10/10/2026</td><td>09:00</td><td>Dor no peito</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td>
+                            </tr>
+                            <tr>
+                                <td>João Souza</td><td>Dra. Paula Rocha</td><td>10/10/2026</td><td>10:30</td><td>Retorno</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td>
+                            </tr>
+                            <tr>
+                                <td>Ana Pereira</td><td>Dr. Carlos Lima</td><td>11/10/2026</td><td>14:00</td><td>Exames de rotina</td><td><button class="secondary">Editar</button> <button class="danger">Excluir</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

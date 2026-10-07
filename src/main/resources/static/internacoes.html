@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexaMed - Internações</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2>NexaMed</h2>
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="pacientes.html">Pacientes</a>
+                <a href="profissionais.html">Profissionais</a>
+                <a href="quartos.html">Quartos</a>
+                <a href="consultas.html">Consultas</a>
+                <a href="internacoes.html" class="active">Internações</a>
+                <a href="historico.html">Histórico médico</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Internações</h1>
+            <section class="card">
+                <h2>Nova internação</h2>
+                <form class="form">
+                    <label>Paciente<select><option value="">Selecione</option><option>Maria Silva</option><option>João Souza</option><option>Ana Pereira</option></select></label>
+                    <label>Profissional responsável<select><option value="">Selecione</option><option>Dr. Carlos Lima (Cardiologia)</option><option>Dra. Paula Rocha (Pediatria)</option></select></label>
+                    <label>Quarto<select><option value="">Selecione</option><option>101 (1 vaga)</option><option>201 (3 vagas)</option></select></label>
+                    <label>Data de entrada<input type="date" placeholder=""></label>
+                    <label>Data prevista de alta<input type="date" placeholder=""></label>
+                    <label>Data efetiva de alta<input type="date" placeholder=""></label>
+                    <label>Observações<textarea rows="3"></textarea></label>
+                    <div class="actions">
+                        <button type="submit">Registrar internação</button><button type="reset" class="secondary">Limpar</button>
+                    </div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Internações</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Paciente</th><th>Profissional</th><th>Quarto</th><th>Entrada</th><th>Alta prevista</th><th>Alta efetiva</th><th>Situação</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Maria Silva</td><td>Dr. Carlos Lima</td><td>101</td><td>02/10/2026</td><td>09/10/2026</td><td>-</td><td><span class="tag busy">Em andamento</span></td><td><button>Encerrar</button> <button class="secondary">Editar</button></td></tr>
+                            <tr><td>João Souza</td><td>Dra. Paula Rocha</td><td>102</td><td>20/09/2026</td><td>25/09/2026</td><td>24/09/2026</td><td><span class="tag ok">Encerrada</span></td><td><button class="secondary">Ver</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

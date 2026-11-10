@@ -23,7 +23,7 @@ public class InternacaoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Internacao criar(@RequestBody Internacao internacao) {
+    public Internacao criar(@Valid @RequestBody Internacao internacao) {
         return service.criar(internacao);
     }
 

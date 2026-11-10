@@ -25,6 +25,11 @@ public class GlobalExceptionHandler {
         return resposta(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
     }
 
+    @ExceptionHandler(RequisicaoInvalidaException.class)
+    public ResponseEntity<Map<String, Object>> requisicaoInvalida(RequisicaoInvalidaException e) {
+        return resposta(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> validacao(MethodArgumentNotValidException e) {
         String msg = e.getBindingResult().getFieldErrors().stream()

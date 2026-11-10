@@ -3,6 +3,7 @@ package br.pucminas.hospital.service;
 import br.pucminas.hospital.dto.HistoricoMedico;
 import br.pucminas.hospital.exception.RecursoNaoEncontradoException;
 import br.pucminas.hospital.exception.RegraNegocioException;
+import br.pucminas.hospital.exception.RequisicaoInvalidaException;
 import br.pucminas.hospital.model.Paciente;
 import br.pucminas.hospital.repository.AtendimentoRepository;
 import br.pucminas.hospital.repository.InternacaoRepository;
@@ -40,7 +41,7 @@ public class PacienteService {
 
     public Paciente buscar(String id) {
         if (id == null) {
-            throw new RecursoNaoEncontradoException("Paciente não informado.");
+            throw new RequisicaoInvalidaException("Paciente não informado.");
         }
         return repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Paciente não encontrado: " + id));

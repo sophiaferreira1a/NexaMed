@@ -2,8 +2,10 @@ package br.pucminas.hospital.service;
 
 import br.pucminas.hospital.exception.RecursoNaoEncontradoException;
 import br.pucminas.hospital.exception.RegraNegocioException;
+import br.pucminas.hospital.exception.RequisicaoInvalidaException;
 import br.pucminas.hospital.model.Quarto;
 import br.pucminas.hospital.model.enums.SituacaoQuarto;
+import br.pucminas.hospital.model.enums.TipoQuarto;
 import br.pucminas.hospital.repository.QuartoRepository;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
@@ -23,19 +25,26 @@ public class QuartoService {
         if (repository.existsByNumId(quarto.getNumId())) {
             throw new RegraNegocioException("Já existe um quarto com o número " + quarto.getNumId() + ".");
         }
+        quarto.validarTipo();
         quarto.setId(null);
         quarto.setOcupacaoAtual(0);
         quarto.atualizarSituacao();
         return repository.save(quarto);
     }
 
-    public List<Quarto> listar(boolean apenasDisponiveis) {
-        return apenasDisponiveis ? repository.findBySituacao(SituacaoQuarto.DISPONIVEL) : repository.findAll();
+    /** Lista quartos, com filtros opcionais por tipo (ENFERMARIA, APARTAMENTO, UTI) e por disponibilidade. */
+    public List<Quarto> listar(TipoQuarto tipo, boolean apenasDisponiveis) {
+        if (tipo == null) {
+            return apenasDisponiveis ? repository.findBySituacao(SituacaoQuarto.DISPONIVEL) : repository.findAll();
+        }
+        return apenasDisponiveis
+                ? repository.findByTipoAndSituacao(tipo, SituacaoQuarto.DISPONIVEL)
+                : repository.findByTipo(tipo);
     }
 
     public Quarto buscar(String id) {
         if (id == null) {
-            throw new RecursoNaoEncontradoException("Quarto não informado.");
+            throw new RequisicaoInvalidaException("Quarto não informado.");
         }
         return repository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Quarto não encontrado: " + id));
@@ -54,6 +63,7 @@ public class QuartoService {
         existente.setAndar(novo.getAndar());
         existente.setCapacidadeMax(novo.getCapacidadeMax());
         existente.setTipo(novo.getTipo());
+        existente.validarTipo();
         existente.atualizarSituacao();
         return salvar(existente);
     }

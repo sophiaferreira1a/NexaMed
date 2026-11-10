@@ -1,6 +1,7 @@
 package br.pucminas.hospital.controller;
 
 import br.pucminas.hospital.model.Quarto;
+import br.pucminas.hospital.model.enums.TipoQuarto;
 import br.pucminas.hospital.service.QuartoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,11 @@ public class QuartoController {
         return service.criar(quarto);
     }
 
+    /** Filtros opcionais: ?tipo=ENFERMARIA|APARTAMENTO|UTI&disponiveis=true */
     @GetMapping
-    public List<Quarto> listar(@RequestParam(defaultValue = "false") boolean disponiveis) {
-        return service.listar(disponiveis);
+    public List<Quarto> listar(@RequestParam(required = false) TipoQuarto tipo,
+                               @RequestParam(defaultValue = "false") boolean disponiveis) {
+        return service.listar(tipo, disponiveis);
     }
 
     @GetMapping("/{id}")

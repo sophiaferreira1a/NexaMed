@@ -82,7 +82,15 @@ public class InternacaoService {
     public Internacao darAlta(String id, LocalDate data) {
         Internacao internacao = buscar(id);
         internacao.darAlta(data);
-        quartoService.liberar(internacao.getQuartoId());
-        return repository.save(internacao);
+        Internacao salva = repository.save(internacao);
+        try {
+            quartoService.liberar(internacao.getQuartoId());
+        } catch (RuntimeException e) {
+            // desfaz a alta se o quarto não puder ser liberado, para não ficar internação encerrada com leito ocupado
+            salva.setDataEfetivaAlta(null);
+            repository.save(salva);
+            throw e;
+        }
+        return salva;
     }
 }

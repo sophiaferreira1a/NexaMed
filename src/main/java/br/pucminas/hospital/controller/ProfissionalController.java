@@ -8,9 +8,12 @@ import br.pucminas.hospital.model.enums.Especialidade;
 import br.pucminas.hospital.service.AtendimentoService;
 import br.pucminas.hospital.service.ProfissionalService;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -31,9 +34,21 @@ public class ProfissionalController {
         return service.criar(profissional);
     }
 
+    /** Filtros opcionais: ?tipo=CLINICO_GERAL|ESPECIALISTA|CIRURGIAO&especialidade=CARDIOLOGIA */
     @GetMapping
-    public List<Profissional> listar(@RequestParam(required = false) Especialidade especialidade) {
-        return service.listar(especialidade);
+    public List<Profissional> listar(@RequestParam(required = false) String tipo,
+                                     @RequestParam(required = false) Especialidade especialidade) {
+        return service.listar(tipo, especialidade);
+    }
+
+    /** Profissionais livres num horário. Ex.: ?especialidade=CARDIOLOGIA&data=2026-11-20&horario=14:00 */
+    @GetMapping("/disponiveis")
+    public List<Profissional> listarDisponiveis(
+            @RequestParam(required = false) String tipo,
+            @RequestParam(required = false) Especialidade especialidade,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horario) {
+        return service.listarDisponiveis(tipo, especialidade, data, horario);
     }
 
     @GetMapping("/{id}")
@@ -50,6 +65,13 @@ public class ProfissionalController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable String id) {
         service.deletar(id);
+    }
+
+    /** Consultas e emergências do profissional (ex.: consultas realizadas: ?situacao=CONCLUIDA). */
+    @GetMapping("/{id}/consultas")
+    public List<Atendimento> listarConsultas(@PathVariable String id,
+                                             @RequestParam(required = false) String situacao) {
+        return atendimentoService.listarConsultasDoProfissional(id, situacao);
     }
 
     // ---------- procedimentos cirúrgicos do cirurgião ----------

@@ -1,0 +1,206 @@
+@startuml diagrama-de-classes-sprint2
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide empty members
+title NexaMed - Diagrama de Classes (Sprint 2)
+
+' ===================== Profissionais =====================
+abstract class Profissional <<Document profissionais>> {
+  - id : String
+  - nome : String
+  - registroProfissional : String
+  - telefone : String
+  - email : String
+}
+class ClinicoGeral
+class Especialista {
+  - especialidade : Especialidade
+}
+class Cirurgiao {
+  - atuacaoCirurgica : String
+}
+Profissional <|-- ClinicoGeral
+Profissional <|-- Especialista
+Profissional <|-- Cirurgiao
+
+' ===================== Atendimentos =====================
+abstract class Atendimento <<Document atendimentos>> {
+  - id : String
+  - pacienteId : String
+  - profissionalId : String
+  - data : LocalDate
+  - horario : LocalTime
+  - observacoes : String
+  - reagendamentoDeId : String
+  + {abstract} validarCondicoes(profissional : Profissional) : void
+  + {abstract} ocupaHorario() : boolean
+  + {abstract} situacaoAtual() : Enum
+  # {abstract} permiteAlterarAgendamento() : boolean
+  # {abstract} permiteRegistrarObservacoes() : boolean
+  + alterarAgendamento(data : LocalDate, horario : LocalTime) : void
+  + registrarObservacoes(texto : String) : void
+}
+
+abstract class Consulta {
+  - situacao : SituacaoConsulta
+  + alterarSituacao(nova : SituacaoConsulta) : void
+  + criarReagendamento(data : LocalDate, horario : LocalTime) : Consulta
+  # {abstract} copiarDadosDaModalidade() : Consulta
+}
+
+class ConRotina {
+  - motivo : String
+  + validarCondicoes(profissional : Profissional) : void
+  + permiteEncaminhamento() : boolean
+}
+
+class ConEspecializada {
+  - especialidade : Especialidade
+  - consultaOrigemId : String
+  + validarCondicoes(profissional : Profissional) : void
+}
+
+class AtEmergencia {
+  - prioridade : Prioridade
+  - situacao : SituacaoEmergencia
+  + validarCondicoes(profissional : Profissional) : void
+  + alterarSituacao(nova : SituacaoEmergencia) : void
+}
+
+class ProCirurgico {
+  - descricaoProcedimento : String
+  - tipoCirurgia : String
+  - observacoesPreOp : String
+  - observacoesPosOp : String
+  - dataEfetiva : LocalDate
+  - horarioEfetivo : LocalTime
+  - situacao : SituacaoProcedimento
+  + validarCondicoes(profissional : Profissional) : void
+  + iniciar() : void
+  + concluir() : void
+  + cancelar() : void
+  + alterarSituacao(nova : SituacaoProcedimento) : void
+  + alterarDadosDoProcedimento(descricao : String, tipo : String) : void
+  + registrarObservacoesPreOp(texto : String) : void
+  + registrarObservacoesPosOp(texto : String) : void
+}
+
+Atendimento <|-- Consulta
+Consulta <|-- ConRotina
+Consulta <|-- ConEspecializada
+Atendimento <|-- AtEmergencia
+Atendimento <|-- ProCirurgico
+
+' ===================== Paciente, internação e quarto =====================
+class Paciente <<Document pacientes>> {
+  - id : String
+  - nome : String
+  - cpf : String
+  - dataDeNascimento : LocalDate
+  - telefone : String
+  - endereco : String
+  - email : String
+}
+
+class Internacao <<Document internacoes>> {
+  - id : String
+  - pacienteId : String
+  - profissionalId : String
+  - quartoId : String
+  - dataEntrada : LocalDate
+  - dataPrevistaAlta : LocalDate
+  - dataEfetivaAlta : LocalDate
+  - observacoes : String
+  + ativa() : boolean
+  + darAlta(data : LocalDate) : void
+}
+
+class Quarto <<Document quartos>> {
+  - id : String
+  - numId : String
+  - andar : int
+  - capacidadeMax : int
+  - tipo : TipoQuarto
+  - ocupacaoAtual : int
+  - situacao : SituacaoQuarto
+  - version : Long
+  + validarTipo() : void
+  + temVaga() : boolean
+  + ocupar() : void
+  + liberar() : void
+  + atualizarSituacao() : void
+}
+
+class HistoricoMedico <<record>> {
+  + paciente : Paciente
+  + atendimentos : List<Atendimento>
+  + internacoes : List<Internacao>
+}
+
+' ===================== Enumerações =====================
+enum Especialidade {
+  CARDIOLOGIA
+  NEUROLOGIA
+  ORTOPEDIA
+}
+enum Prioridade {
+  BAIXA
+  MODERADA
+  ALTA
+  CRITICA
+}
+enum SituacaoConsulta {
+  AGENDADA
+  CONFIRMADA
+  EM_ATENDIMENTO
+  CONCLUIDA
+  CANCELADA
+  NAO_COMPARECEU
+  + podeTransicionarPara(nova : SituacaoConsulta) : boolean
+}
+enum SituacaoEmergencia {
+  AGUARDANDO_AVALIACAO
+  INICIADO
+  CONCLUIDO
+  + podeTransicionarPara(nova : SituacaoEmergencia) : boolean
+}
+enum SituacaoProcedimento {
+  AGENDADO
+  EM_ANDAMENTO
+  CONCLUIDO
+  CANCELADO
+}
+enum SituacaoQuarto {
+  DISPONIVEL
+  OCUPADO
+}
+enum TipoQuarto {
+  ENFERMARIA (2 a 6 leitos)
+  APARTAMENTO (1 leito)
+  UTI (1 leito)
+  - capacidadeMinima : int
+  - capacidadeMaxima : int
+  + validarCapacidade(capacidade : int) : void
+}
+
+' ===================== Associações (guardadas por id no MongoDB) =====================
+Paciente "1" -- "0..*" Atendimento : pacienteId
+Profissional "1" -- "0..*" Atendimento : profissionalId
+Paciente "1" -- "0..*" Internacao : pacienteId
+Profissional "1" -- "0..*" Internacao : profissionalId
+Quarto "1" -- "0..*" Internacao : quartoId
+ConRotina "0..1" <.. "0..*" ConEspecializada : consultaOrigemId\n(encaminhamento)
+HistoricoMedico o-- "1" Paciente
+HistoricoMedico o-- "0..*" Atendimento
+HistoricoMedico o-- "0..*" Internacao
+
+Especialista --> Especialidade
+ConEspecializada --> Especialidade
+Consulta --> SituacaoConsulta
+AtEmergencia --> SituacaoEmergencia
+AtEmergencia --> Prioridade
+ProCirurgico --> SituacaoProcedimento
+Quarto --> TipoQuarto
+Quarto --> SituacaoQuarto
+@enduml

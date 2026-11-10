@@ -1,13 +1,13 @@
-package com.trabalho.nexamed;
+package br.pucminas.hospital;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NexamedApplication {
+public class HospitalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NexamedApplication.class, args);
+		SpringApplication.run(HospitalApplication.class, args);
 	}
 
 }

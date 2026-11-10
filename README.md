@@ -7,6 +7,15 @@ docker compose up -d      # sobe o MongoDB em localhost:27017
 ```
 Java 17+. Instale o plugin do Lombok na IDE.
 
+## Estrutura
+```
+pom.xml                 # único pom (Spring Boot 3.3.5 + MongoDB)
+src/main/java/br/pucminas/hospital/{model,repository,service,controller,dto,exception}
+src/main/resources/     # application.properties + telas estáticas
+docs/                   # diagramas de classes e cartões CRC
+docker-compose.yml      # MongoDB local
+```
+
 ## Endpoints
 | Recurso | Rotas |
 |---|---|

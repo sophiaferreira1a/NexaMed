@@ -27,6 +27,21 @@ public class AtEmergencia extends Atendimento {
         return true;
     }
 
+    @Override
+    public Enum<?> situacaoAtual() {
+        return situacao;
+    }
+
+    @Override
+    protected boolean permiteAlterarAgendamento() {
+        return situacao == SituacaoEmergencia.AGUARDANDO_AVALIACAO;
+    }
+
+    @Override
+    protected boolean permiteRegistrarObservacoes() {
+        return situacao != SituacaoEmergencia.AGUARDANDO_AVALIACAO;
+    }
+
     public void alterarSituacao(SituacaoEmergencia nova) {
         if (!situacao.podeTransicionarPara(nova)) {
             throw new RegraNegocioException("Transição não permitida: " + situacao + " -> " + nova);

@@ -2,18 +2,18 @@ package br.pucminas.hospital.model;
 
 import br.pucminas.hospital.exception.RegraNegocioException;
 import br.pucminas.hospital.model.enums.Especialidade;
-import br.pucminas.hospital.model.enums.SituacaoConsulta;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ConEspecializada extends Atendimento {
+public class ConEspecializada extends Consulta {
     private Especialidade especialidade;
 
+    /** Consulta de rotina que originou o encaminhamento, quando houver. */
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private SituacaoConsulta situacao = SituacaoConsulta.AGENDADA;
+    private String consultaOrigemId;
 
     @Override
     public void validarCondicoes(Profissional profissional) {
@@ -27,14 +27,10 @@ public class ConEspecializada extends Atendimento {
     }
 
     @Override
-    public boolean ocupaHorario() {
-        return situacao != SituacaoConsulta.CANCELADA && situacao != SituacaoConsulta.NAO_COMPARECEU;
-    }
-
-    public void alterarSituacao(SituacaoConsulta nova) {
-        if (!situacao.podeTransicionarPara(nova)) {
-            throw new RegraNegocioException("Transição não permitida: " + situacao + " -> " + nova);
-        }
-        situacao = nova;
+    protected Consulta copiarDadosDaModalidade() {
+        ConEspecializada nova = new ConEspecializada();
+        nova.setEspecialidade(especialidade);
+        nova.setConsultaOrigemId(consultaOrigemId);
+        return nova;
     }
 }

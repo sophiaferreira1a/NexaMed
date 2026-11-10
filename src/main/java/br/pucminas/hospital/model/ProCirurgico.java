@@ -32,6 +32,59 @@ public class ProCirurgico extends Atendimento {
         if (descricaoProcedimento == null || descricaoProcedimento.isBlank()) {
             throw new RegraNegocioException("A descrição do procedimento é obrigatória.");
         }
+        if (tipoCirurgia == null || tipoCirurgia.isBlank()) {
+            throw new RegraNegocioException("O tipo de cirurgia é obrigatório.");
+        }
+    }
+
+    @Override
+    public Enum<?> situacaoAtual() {
+        return situacao;
+    }
+
+    @Override
+    protected boolean permiteAlterarAgendamento() {
+        return situacao == SituacaoProcedimento.AGENDADO;
+    }
+
+    @Override
+    protected boolean permiteRegistrarObservacoes() {
+        return situacao == SituacaoProcedimento.EM_ANDAMENTO || situacao == SituacaoProcedimento.CONCLUIDO;
+    }
+
+    /** Descrição e tipo da cirurgia podem ser corrigidos enquanto o procedimento está agendado. */
+    public void alterarDadosDoProcedimento(String novaDescricao, String novoTipo) {
+        if (situacao != SituacaoProcedimento.AGENDADO) {
+            throw new RegraNegocioException("Descrição e tipo só podem ser alterados antes do início do procedimento.");
+        }
+        if (novaDescricao != null) {
+            if (novaDescricao.isBlank()) {
+                throw new RegraNegocioException("A descrição do procedimento é obrigatória.");
+            }
+            descricaoProcedimento = novaDescricao;
+        }
+        if (novoTipo != null) {
+            if (novoTipo.isBlank()) {
+                throw new RegraNegocioException("O tipo de cirurgia é obrigatório.");
+            }
+            tipoCirurgia = novoTipo;
+        }
+    }
+
+    /** Observações pré-operatórias: registradas enquanto o procedimento ainda está agendado. */
+    public void registrarObservacoesPreOp(String texto) {
+        if (situacao != SituacaoProcedimento.AGENDADO) {
+            throw new RegraNegocioException("Observações pré-operatórias só podem ser registradas antes do início.");
+        }
+        observacoesPreOp = texto;
+    }
+
+    /** Observações pós-operatórias: registradas depois que o procedimento foi iniciado. */
+    public void registrarObservacoesPosOp(String texto) {
+        if (situacao != SituacaoProcedimento.EM_ANDAMENTO && situacao != SituacaoProcedimento.CONCLUIDO) {
+            throw new RegraNegocioException("Observações pós-operatórias só podem ser registradas após o início.");
+        }
+        observacoesPosOp = texto;
     }
 
     @Override

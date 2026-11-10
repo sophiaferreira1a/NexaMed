@@ -2,6 +2,7 @@ package br.pucminas.hospital.model;
 
 import br.pucminas.hospital.exception.RegraNegocioException;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -15,8 +16,11 @@ import java.time.LocalDate;
 public class Internacao {
     @Id
     private String id;
+    @NotBlank
     private String pacienteId;
+    @NotBlank
     private String profissionalId;
+    @NotBlank
     private String quartoId;
     private LocalDate dataEntrada;
     private LocalDate dataPrevistaAlta;

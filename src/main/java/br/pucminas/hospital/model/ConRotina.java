@@ -2,17 +2,13 @@ package br.pucminas.hospital.model;
 
 import br.pucminas.hospital.exception.RegraNegocioException;
 import br.pucminas.hospital.model.enums.SituacaoConsulta;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ConRotina extends Atendimento {
+public class ConRotina extends Consulta {
     private String motivo;
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private SituacaoConsulta situacao = SituacaoConsulta.AGENDADA;
 
     @Override
     public void validarCondicoes(Profissional profissional) {
@@ -24,15 +20,15 @@ public class ConRotina extends Atendimento {
         }
     }
 
-    @Override
-    public boolean ocupaHorario() {
-        return situacao != SituacaoConsulta.CANCELADA && situacao != SituacaoConsulta.NAO_COMPARECEU;
+    /** O clínico geral só encaminha a partir de uma consulta que está em atendimento ou já foi concluída. */
+    public boolean permiteEncaminhamento() {
+        return getSituacao() == SituacaoConsulta.EM_ATENDIMENTO || getSituacao() == SituacaoConsulta.CONCLUIDA;
     }
 
-    public void alterarSituacao(SituacaoConsulta nova) {
-        if (!situacao.podeTransicionarPara(nova)) {
-            throw new RegraNegocioException("Transição não permitida: " + situacao + " -> " + nova);
-        }
-        situacao = nova;
+    @Override
+    protected Consulta copiarDadosDaModalidade() {
+        ConRotina nova = new ConRotina();
+        nova.setMotivo(motivo);
+        return nova;
     }
 }

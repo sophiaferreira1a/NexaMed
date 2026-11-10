@@ -38,6 +38,11 @@ public class Quarto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long version;
 
+    /** Regra dos tipos de quarto: a capacidade precisa respeitar a faixa do tipo (ver TipoQuarto). */
+    public void validarTipo() {
+        tipo.validarCapacidade(capacidadeMax);
+    }
+
     public boolean temVaga() {
         return ocupacaoAtual < capacidadeMax;
     }
